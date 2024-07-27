@@ -1,5 +1,5 @@
 //========================================================================
-// GLFW 3.4 POSIX - www.glfw.org
+// GLFW 3.5 POSIX - www.glfw.org
 //------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2017 Camilla Löwy <elmindreda@glfw.org>
@@ -24,22 +24,20 @@
 //    distribution.
 //
 //========================================================================
-// It is fine to use C99 in this file because it will not be built with VS
-//========================================================================
 
 #include "internal.h"
+
+#if defined(GLFW_BUILD_POSIX_TIMER)
 
 #include <unistd.h>
 #include <sys/time.h>
 
 
 //////////////////////////////////////////////////////////////////////////
-//////                       GLFW internal API                      //////
+//////                       GLFW platform API                      //////
 //////////////////////////////////////////////////////////////////////////
 
-// Initialise timer
-//
-void _glfwInitTimerPOSIX(void)
+void _glfwPlatformInitTimer(void)
 {
     _glfw.timer.posix.clock = CLOCK_REALTIME;
     _glfw.timer.posix.frequency = 1000000000;
@@ -50,11 +48,6 @@ void _glfwInitTimerPOSIX(void)
         _glfw.timer.posix.clock = CLOCK_MONOTONIC;
 #endif
 }
-
-
-//////////////////////////////////////////////////////////////////////////
-//////                       GLFW platform API                      //////
-//////////////////////////////////////////////////////////////////////////
 
 uint64_t _glfwPlatformGetTimerValue(void)
 {
@@ -67,4 +60,6 @@ uint64_t _glfwPlatformGetTimerFrequency(void)
 {
     return _glfw.timer.posix.frequency;
 }
+
+#endif // GLFW_BUILD_POSIX_TIMER
 
